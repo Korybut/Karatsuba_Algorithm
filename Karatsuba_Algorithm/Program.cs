@@ -10,25 +10,25 @@ namespace Karatsuba_Algorithm
     {
         static void Main(string[] args)
         {
-            int liczba = Karatsuba("12345", "23125");
+            string liczba = Karatsuba("1234567890", "1234567890");
             Console.WriteLine(liczba);
             Console.ReadKey();
         }
 
-        public static int Karatsuba(String num1, String num2)
+        public static string Karatsuba(string num1, string num2)
         {
-            if(num1.Length<2|| num2.Length<2)
+            if(num1.Length<2 || num2.Length<2)
             {
-                return Convert.ToInt32(num1) * Convert.ToInt32(num2);
+                return Convert.ToString(Convert.ToInt32(num1) * Convert.ToInt32(num2));
             }
 
-            if(num1.Length % 2 != 0)
+            if(num1.Length % 2 != 0 & Convert.ToDecimal(num1)!=0)
             {
                 num1 = "0" + num1;
                 Console.WriteLine("num1 = " + num1);
             }
-
-            if (num2.Length % 2 != 0)
+            
+            if (num2.Length % 2 != 0 & Convert.ToDecimal(num2) != 0)
             {
                 num2 = "0" + num2;
                 Console.WriteLine("num1 = " + num2);
@@ -39,17 +39,18 @@ namespace Karatsuba_Algorithm
             int m = n / 2;
 
             /* H - high, L - low */
-            int H1 = Convert.ToInt32(num1.Substring(0, m));
-            int L1 = Convert.ToInt32(num1.Substring(m));
+            string H1 = num1.Substring(0, m);
+            string L1 = num1.Substring(m);
 
-            int H2 = Convert.ToInt32(num2.Substring(0, m));
-            int L2 = Convert.ToInt32(num2.Substring(m));
+            string H2 = num2.Substring(0, m);
+            string L2 = num2.Substring(m);
 
-            int X = Karatsuba(H1.ToString(), H2.ToString());
-            int Y = Karatsuba(L1.ToString(), L2.ToString());
-            int Z = Karatsuba((L1 + H1).ToString(), (L2 + H2).ToString()) - X - Y;
+            Decimal X = Convert.ToDecimal(Karatsuba(H1, H2));
+            Decimal Y = Convert.ToDecimal(Karatsuba(L1, L2));
+            Decimal Z = Convert.ToDecimal(Karatsuba((Convert.ToDecimal(L1) + Convert.ToDecimal(H1)).ToString(), (Convert.ToDecimal(L2) + Convert.ToDecimal(H2)).ToString())) - X - Y;
 
-            return (X * (int)Math.Pow(10, (2 * m))) + (Z * (int)Math.Pow(10, m)) + Y;
+            string lol = Convert.ToString(Decimal.Add(Decimal.Add(Decimal.Multiply(X, (Decimal)Math.Pow(10, (2 * m))), Decimal.Multiply(Z, (Decimal)Math.Pow(10, m))), Y));
+            return lol;
         }
 
     }
